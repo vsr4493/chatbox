@@ -1,8 +1,6 @@
 import http from 'http';
 import io from 'socket.io';
-import redis from 'redis';
-import fs from 'fs';
-import * as conf from './conf/index';
+import {configAsync} from './util/index';
 import {app} from './server/index';
 
 /*Creating an http server instance*/
@@ -14,14 +12,23 @@ const httpClient = http.Server(app);
 /*Creating a socketIO server instance with the existing http server*/
 const ioClient = io(httpClient);
 
-
-/*Starting the server*/
-const startServer = () => {
-	let port = process.env.PORT || conf.app.port || 8080;
+/*Setting up server with the recieved configuration*/
+const serverSetup = (config) => {
+	let port = process.env.PORT || config.app.port || 8080;
 	httpClient.listen(port, function startHttpClient(){
 		console.log(`Server started. Listening on : ${port}`);
 	});
-}
+};
 
+/*Retreive app configuration and start the server*/
+const startServer = function(){
+	configAsync.then((config)=>{
+		serverSetup(config);
+	}).catch(() => {
+		console.log("Could not access configuration");
+	});
+}
 var people = [];
 var messages = [];
+
+startServer();
