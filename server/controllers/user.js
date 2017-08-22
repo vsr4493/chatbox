@@ -5,13 +5,17 @@ const errorHandler = (res) => (err) => {
 	})
 };
 
+const parseUsers = (usersJSON) => {
+	return JSON.parse(usersJSON) || [];
+}
+
 function makeUserController(store){
 	return {
 		joinPOST(req,res){
 			let username = req.body.username;
 			store.getAsync("CHAT_USERS").then((usersJSON) => 
 			{
-				let users = JSON.parse(usersJSON) || [];
+				let users = parseUsers(usersJSON);
 				if(users.indexOf(username)==-1){
 					users.push(username);
 					store.set("CHAT_USERS", JSON.stringify(users));
@@ -24,10 +28,11 @@ function makeUserController(store){
 		},
 		leavePOST(req,res){
 			let username = req.body.username;
-			store.getAsync("CHAT_USERS").then(users => 
+			store.getAsync("CHAT_USERS").then(usersJSON => 
 			{
+				let users = parseUsers(usersJSON);
 				let updatedUsers = users.filter(user => user !== username);
-		    client.set('CHAT_USERS', JSON.stringify(updatedUsers));
+		    store.set('CHAT_USERS', JSON.stringify(updatedUsers));
 		    res.send({
 		        'status': 'OK'
 		    });
