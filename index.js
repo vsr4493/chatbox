@@ -28,7 +28,5 @@ const startServer = function(){
 		console.log("Could not access configuration");
 	});
 }
-var people = [];
-var messages = [];
 
 startServer();
