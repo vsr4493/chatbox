@@ -16,6 +16,7 @@ const redisClient = (config) => {
 	/*Adding event listeners for client*/
 	client.once('ready',function redisClientReady(){
 		console.log("Client is ready");
+		client.flushdb();
 	});
 	
 	client.on("connect",function redisClientConnected(){

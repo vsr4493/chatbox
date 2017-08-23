@@ -41,7 +41,7 @@ function user({store,socketAPI}){
 		    store.set('CHAT_USERS', JSON.stringify(updatedUsers));
 
 		    /*Emitting updated user count to all users*/
-		    socketAPI && socketAPI.updateUserCount(users.length);
+		    socketAPI && socketAPI.updateUserCount(updatedUsers.length);
 
 		    res.send({
 		        'status': 'OK'
