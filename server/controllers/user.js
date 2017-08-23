@@ -9,9 +9,9 @@ const parseUsers = (usersJSON) => {
 	return JSON.parse(usersJSON) || [];
 }
 
-function makeUserController(store){
+function user(store){
 	return {
-		joinPOST(req,res){
+		join(req,res){
 			let username = req.body.username;
 			store.getAsync("CHAT_USERS").then((usersJSON) => 
 			{
@@ -26,7 +26,7 @@ function makeUserController(store){
 				}else throw new Error("Username is already in use");
 			}).catch(errorHandler(res)); 
 		},
-		leavePOST(req,res){
+		leave(req,res){
 			let username = req.body.username;
 			store.getAsync("CHAT_USERS").then(usersJSON => 
 			{
@@ -38,7 +38,7 @@ function makeUserController(store){
 		    });
 			}).catch(errorHandler(res));
 		},
-		usersGET(req,res){
+		all(req,res){
 			store.getAsync("CHAT_USERS").then(users => 
 			{
 				res.send(users);
@@ -47,4 +47,4 @@ function makeUserController(store){
 	};
 }
 
-export default makeUserController;
+export default user;

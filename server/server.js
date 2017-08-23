@@ -2,7 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import log from 'npmlog';
 import path from 'path';
-import makeUserController from './controllers/user';
+import user as userControllerFactory from './controllers/user';
+import message as messageControllerFactory from './controllers/message';
 
 /*Logging*/
 log.enableColor();
@@ -21,17 +22,24 @@ const makeServer = (store) => {
 		type: "application/x-www-form-urlencoded"
 	}));
 
-	const userController = makeUserController(store);
+	const userController = userControllerFactory(store);
+	const messageController = messageControllerFactory(store);
+
 	app.get('/', function (req, res) {
 			console.log(__dirname);
 	    res.sendFile('views/index.html', {
 	        root: path.dirname(require.main.filename)
 	    });
 	});
-	app.post('/join', userController.joinPOST);
-	app.post('/leave', userController.leavePOST);
-	app.get('/users', userController.usersGET);
-	/*Adding express middleware for serving static files*/
+	
+	/*User Route Handlers*/
+	app.post('/join', userController.join);
+	app.post('/leave', userController.leave);
+	app.get('/users', userController.all);
+	/*Message Route Handlers*/
+	app.get('/message', messageController.getMessage);	
+	app.post('/message', messageController.addMessage);	
+
 	return app;	
 }
 
