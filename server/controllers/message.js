@@ -1,3 +1,5 @@
+import events from 'events';
+
 const errorHandler = (res) => (err) => {
 	console.log(`ERROR: ${err}`);
 	res.send({

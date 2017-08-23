@@ -42,8 +42,11 @@ const makeServer = (store) => {
 	api.post('/message_add', messageController.addMessage);	
 
 	app.use("/api",api);
-
-	return app;	
+	
+	const serverClient = {
+		app:app
+	}
+	return serverClient;	
 }
 
 export {makeServer};
