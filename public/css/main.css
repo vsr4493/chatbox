@@ -1,4 +1,7 @@
 /*! HTML5 Boilerplate v5.0 | MIT License | http://h5bp.com/ */
+*{
+    box-sizing:border-box;
+}
 
 html {
     color: #222;
@@ -58,34 +61,13 @@ textarea {
 
 body {
     font: 16px/26px Helvetica, Helvetica Neue, Arial;
+    width:80%;
+    margin:20px auto;
 }
 
 .wrapper {
     width: 90%;
     margin: 0 5%;
-}
-
-/* ===================
-    ALL: Orange Theme
-   =================== */
-
-.header-container {
-    border-bottom: 20px solid #e44d26;
-}
-
-.footer-container,
-.main aside {
-    border-top: 20px solid #e44d26;
-}
-
-.header-container,
-.footer-container,
-.main aside {
-    background: #f16529;
-}
-
-.title {
-    color: white;
 }
 
 /* ==============

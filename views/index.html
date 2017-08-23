@@ -10,58 +10,42 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="../public/apple-touch-icon.png">
-
-        <link rel="stylesheet" href="../public/css/normalize.min.css">
-        <link rel="stylesheet" href="../public/css/main.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/normalize.min.css">
+        <link rel="stylesheet" href="/css/main.css">
 
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+       <script
+         src="https://code.jquery.com/jquery-3.2.1.min.js"
+         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+         crossorigin="anonymous"></script>
     </head>
     <body>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <div class="header-container">
-            <header class="wrapper clearfix">
-                <h1 class="title">h1.title</h1>
-                <nav>
-                    <ul>
-                        <li><a href="#">nav ul li a</a></li>
-                        <li><a href="#">nav ul li a</a></li>
-                        <li><a href="#">nav ul li a</a></li>
-                    </ul>
-                </nav>
-            </header>
-        </div>
-
-        <div class="main-container">
-            <div class="main wrapper clearfix">
-
-                <article>
-                    <header>
-                        <h1>article header h1</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec.</p>
-                    </header>
-                    <section>
-                        <h2>article section h2</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
-                    </section>
-                    <section>
-                        <h2>article section h2</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
-                    </section>
-                    <footer>
-                        <h3>article footer h3</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor.</p>
-                    </footer>
-                </article>
-
-                <aside>
-                    <h3>aside</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices.</p>
-                </aside>
-
-            </div> <!-- #main -->
+        <div class="container-fluid">
+          <div id="chat_join_display">
+             <label for="username">Username:</label>
+             <input type="text" id="username" name="username" />
+             <input type="button" class="btn btn-sm" id="chat_join_btn" value="Join Chat" />
+          </div><br />  
+          <div>
+            <p id="chat_info_display" class="alert alert-info"></p>
+          </div>
+          <br />
+          <div id="chat_messages_display" class="panel">
+            <div class="panel-heading">
+              <h2>Messages</h2>
+            </div>
+            <div class="panel-body">
+             <div id="chat_messages" class="message-display"></div>
+             <textarea name="message" id="message" cols="90" rows="5" placeholder="Enter your message..."></textarea><br /><br />
+             <input type="button" class="btn btn-sm" id="message_send_btn" data-username="" value="Send Message">&nbsp;
+             <input type="button" class="btn btn-sm" id="chat_leave_btn" data-username="" value="Leave Chat">
+            </div>
+          </div>
         </div> <!-- #main-container -->
 
         <div class="footer-container">
@@ -70,7 +54,9 @@
             </footer>
         </div>
 
-        <script src="../public/js/main.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+        <script src="/js/main.js"></script>
+
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
