@@ -13,11 +13,13 @@ function user(store){
 	return {
 		join(req,res){
 			let username = req.body.username;
+			console.log(username);
 			store.getAsync("CHAT_USERS").then((usersJSON) => 
 			{
 				let users = parseUsers(usersJSON);
 				if(users.indexOf(username)==-1){
 					users.push(username);
+					console.log(users);
 					store.set("CHAT_USERS", JSON.stringify(users));
 					res.send({
 						'users': users,

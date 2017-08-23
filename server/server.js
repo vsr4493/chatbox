@@ -2,8 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import log from 'npmlog';
 import path from 'path';
-import user as userControllerFactory from './controllers/user';
-import message as messageControllerFactory from './controllers/message';
+import userControllerFactory from './controllers/user';
+import messageControllerFactory from './controllers/message';
 
 /*Logging*/
 log.enableColor();
@@ -17,13 +17,6 @@ const makeServer = (store) => {
 	//express() returns a function with a signature func(req,res) which can handle requests and response arguments.
 	const app = express();
 	app.use(express.static('public'));
-	app.use(bodyParser.urlencoded({
-		extended:true,
-		type: "application/x-www-form-urlencoded"
-	}));
-
-	const userController = userControllerFactory(store);
-	const messageController = messageControllerFactory(store);
 
 	app.get('/', function (req, res) {
 			console.log(__dirname);
@@ -31,14 +24,24 @@ const makeServer = (store) => {
 	        root: path.dirname(require.main.filename)
 	    });
 	});
-	
+
+	const api = express.Router(); 
+	const userController = userControllerFactory(store);
+	const messageController = messageControllerFactory(store);
+
+	api.use(bodyParser.urlencoded({
+		extended:true,
+		type: "application/x-www-form-urlencoded"
+	}));
 	/*User Route Handlers*/
-	app.post('/join', userController.join);
-	app.post('/leave', userController.leave);
-	app.get('/users', userController.all);
+	api.post('/user_join', userController.join);
+	api.post('/user_leave', userController.leave);
+	api.get('/user_all', userController.all);
 	/*Message Route Handlers*/
-	app.get('/message', messageController.getMessage);	
-	app.post('/message', messageController.addMessage);	
+	api.get('/message_all', messageController.getMessage);	
+	api.post('/message_add', messageController.addMessage);	
+
+	app.use("/api",api);
 
 	return app;	
 }

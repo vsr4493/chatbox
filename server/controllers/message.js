@@ -30,7 +30,7 @@ function message(store){
 		getMessage(req,res){
 			store.getAsync("CHAT_MESSAGES").then((messagesJSON) => 
 			{
-				res.send(messages);
+				res.send(messagesJSON);
 			}).catch(errorHandler(res));
 		}
 	};
