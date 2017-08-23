@@ -1,4 +1,3 @@
-import events from 'events';
 
 const errorHandler = (res) => (err) => {
 	console.log(`ERROR: ${err}`);
@@ -11,7 +10,7 @@ const parseMessages = (messagesJSON) => {
 	return JSON.parse(messagesJSON) || [];
 }
 
-function message(store){
+function message({store,socketAPI}){
 	return {
 		addMessage(req,res){
 			let username = req.body.username;
@@ -24,6 +23,10 @@ function message(store){
 					'message': message
 				});
 				store.set("CHAT_MESSAGES", JSON.stringify(messages));
+
+				/*Emitting updated messages to all users*/
+				socketAPI && socketAPI.updateMessages(messages);
+
 				res.send({
 					'status': "OK"
 				});

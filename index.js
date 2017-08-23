@@ -8,38 +8,36 @@ const serverSetup = (config) => {
 	//Initializing In-memory store
 	const port = process.env.PORT || config.app.port || 8080;
 	const store = makeStore(config);
-	const serverClient = makeServer({
-		store:store
-	});
-
+	const app = makeServer(store);
 	/*Creating an http server instance*/
 	// -Why do we need an http.Server if we have express.listen()?
 	// --Because express.listen() will start accepting connections and we want to hook in socketIO before that.
 	// http.Server() expects a method with a signature func(req,res) to handle the connection.
 	
-	const httpClient = http.Server(serverClient.app);
+	const httpClient = http.Server(app);
 	/*Creating a socketIO server instance with the existing http server*/
 	const ioClient = makeIOClient({
 		store: store,
 		httpClient:httpClient
 	});
-	
-	app.setIOClient(ioClient);
-
 
 	httpClient.listen(port, function startHttpClient(){
 		console.log(`Server started. Listening on : ${port}`);
 	});
+	return Promise.resolve(ioClient);
 };
 
-/*Retreive app configuration and start the server*/
+/*Retreive configuration and start the server*/
 const startServer = function(){
-	configAsync.then((config)=>{
-		serverSetup(config);
+	return configAsync.then((config)=>{
+		return serverSetup(config);
 	}).catch((err) => {
 		console.log(err);
-		console.log("Could not access configuration");
+		return Promise.resolve(null);
 	});
 }
 
-startServer();
+/*Export a promise which will resolve as the websocket client*/
+const ioClient = startServer();
+
+export {ioClient};

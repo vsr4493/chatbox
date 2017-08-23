@@ -12,7 +12,7 @@ const makeIOClient = ({httpClient, store}) => {
 			socket.emit("user_count_update", users.length+1);
 		});
 	});
-	const apiDef = {
+	const api = {
 		updateUserCount(count){
 			client.sockets.emit("user_count_update",count)	
 		},
